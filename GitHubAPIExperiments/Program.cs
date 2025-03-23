@@ -87,7 +87,7 @@ namespace GitHubAPIExperiments
 
             List<Runner> runners = new List<Runner>();
 
-            for (int i = 0; i < 5; i ++)
+            for (int i = 0; i < 1; i ++)
             {
                 RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments{i}", repo);
 
@@ -104,14 +104,8 @@ namespace GitHubAPIExperiments
             {
                 Console.WriteLine(JsonConvert.SerializeObject(runner, Formatting.Indented));
 
-                runner.Stop();
+                runner.Stop(GitHubPAT);
             }
-
-            
-
         }
-
-
-
     }
 }
