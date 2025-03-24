@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Threading;
 
 namespace GitHubAPIExperiments
 {
@@ -79,32 +78,32 @@ namespace GitHubAPIExperiments
 
         public static void TestingLibrary ()
         {
-            NanoDNA.GitHubActionsManager.Repository repo = NanoDNA.GitHubActionsManager.Repository.GetRepo(Owner, Repository, GitHubPAT);
+            GitHubAPIClient.SetGitHubPAT(GitHubPAT);
 
-            Console.WriteLine(JsonConvert.SerializeObject(repo.GetRunners(GitHubPAT), Formatting.Indented));
-
-            Console.WriteLine(repo.HtmlURL);
+            Repository repo = NanoDNA.GitHubActionsManager.Repository.GetRepo(Owner, Repository);
 
             List<Runner> runners = new List<Runner>();
 
-            for (int i = 0; i < 1; i ++)
+            for (int i = 0; i < 3; i ++)
             {
                 RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments{i}", repo);
 
-                builder.AddLabel("githubapiexperiments");
+                builder.AddLabel("GitHub APIExperiments");
 
                 Runner runner = builder.Build();
 
-                runner.Start(GitHubPAT);
+                runner.Start();
 
                 runners.Add(runner);
             }
 
-            foreach(Runner runner in runners)
+            Runner.GetRunners(Owner, Repository);
+
+            foreach (Runner runner in runners)
             {
                 Console.WriteLine(JsonConvert.SerializeObject(runner, Formatting.Indented));
 
-                runner.Stop(GitHubPAT);
+                runner.Stop();
             }
         }
     }
