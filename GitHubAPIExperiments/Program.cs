@@ -59,8 +59,6 @@ namespace GitHubAPIExperiments
                 repoPayload = JsonConvert.DeserializeObject<GitHubRepository>(responseBody);
 
                 Console.WriteLine(JsonConvert.SerializeObject(repoPayload, Formatting.Indented));
-
-                
             }
 
             using (HttpResponseMessage response = client.GetAsync($"{repoPayload.URL}").Result)
@@ -97,7 +95,10 @@ namespace GitHubAPIExperiments
                 runners.Add(runner);
             }
 
-            Runner.GetRunners(Owner, Repository);
+            repo.GetRunners();
+
+
+            //Runner.GetRunners(Owner, Repository);
 
             foreach (Runner runner in runners)
             {
