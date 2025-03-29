@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GitHubAPIExperiments
@@ -93,7 +94,7 @@ namespace GitHubAPIExperiments
                 if (workflow.Status != "queued")
                     continue;
 
-                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo);
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo, true);
 
                 builder.AddLabel($"run-{workflow.ID}");
 
@@ -101,9 +102,11 @@ namespace GitHubAPIExperiments
 
                 runner.Start();
 
-                runner.WaitForNotBusy();
+                Thread.Sleep(5000);
 
-                runner.Stop();
+                //runner.WaitForNotBusy();
+
+                //runner.Stop();
             }
 
 
@@ -116,7 +119,7 @@ namespace GitHubAPIExperiments
 
             for (int i = 0; i < 3; i++)
             {
-                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments{i}", repo);
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments{i}", repo, true);
 
                 builder.AddLabel("GitHub APIExperiments");
 
