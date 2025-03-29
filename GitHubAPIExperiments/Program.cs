@@ -107,7 +107,6 @@ namespace GitHubAPIExperiments
             while (true)
             {
             }
-
         }
 
         static void TestEphemeralRunners(Repository repo)
