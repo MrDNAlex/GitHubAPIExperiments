@@ -101,15 +101,9 @@ namespace GitHubAPIExperiments
 
                 runner.Start();
 
-                Task.Run(() => { 
-                    
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Task.Delay(1000).Wait();
-                    }
+                runner.WaitForNotBusy();
 
-
-                });
+                runner.Stop();
             }
 
 
