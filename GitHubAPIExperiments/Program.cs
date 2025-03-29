@@ -94,7 +94,7 @@ namespace GitHubAPIExperiments
                 if (workflow.Status != "queued")
                     continue;
 
-                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo, true);
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo, false);
 
                 builder.AddLabel($"run-{workflow.ID}");
 
@@ -105,7 +105,6 @@ namespace GitHubAPIExperiments
 
             while (true)
             {
-
             }
         }
 
