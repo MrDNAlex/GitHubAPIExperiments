@@ -120,12 +120,21 @@ namespace GitHubAPIExperiments
                 Console.WriteLine("Received Workflow Run");
                 File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowRun-{count}.json", JsonConvert.SerializeObject(workflowRunEvent, Formatting.Indented));
 
+
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflowRun.WorkflowRun.ID}", repo, true);
+
+                builder.AddLabel($"run-{workflowRun.WorkflowRun.ID}");
+
+                Runner runner = builder.Build();
+
+                runner.Start();
+
                 count++;
             });
 
             webhookService.StartAsync();
 
-            TestEphemeralRunners(repo, true);
+            //TestEphemeralRunners(repo, true);
 
             while (true)
             {
