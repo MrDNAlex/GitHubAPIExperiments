@@ -102,11 +102,14 @@ namespace GitHubAPIExperiments
 
                 runner.Start();
 
-                Thread.Sleep(5000);
-
                 //runner.WaitForNotBusy();
 
                 //runner.Stop();
+            }
+
+            while (true)
+            {
+
             }
 
 
