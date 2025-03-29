@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace GitHubAPIExperiments
 {
@@ -99,7 +100,18 @@ namespace GitHubAPIExperiments
                 Runner runner = builder.Build();
 
                 runner.Start();
+
+                Task.Run(() => { 
+                    
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Task.Delay(1000).Wait();
+                    }
+
+
+                });
             }
+
 
             // repo.GetWorkflowJobs();
         }
