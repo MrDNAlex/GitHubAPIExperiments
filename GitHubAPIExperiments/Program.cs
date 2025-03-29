@@ -1,4 +1,5 @@
-﻿using NanoDNA.GitHubActionsManager;
+﻿using NanoDNA.GitHubManager;
+using NanoDNA.GitHubManager.Events;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace GitHubAPIExperiments
 
 
         static void Main(string[] args)
-        {   
+        {
             GitHubPAT = File.ReadAllText("githubtoken.txt");
 
             Console.WriteLine(GitHubPAT);
@@ -44,7 +45,7 @@ namespace GitHubAPIExperiments
             TestingLibrary();
         }
 
-        public static void GetRepositoryInfo ()
+        public static void GetRepositoryInfo()
         {
             HttpClient client = new HttpClient();
 
@@ -79,14 +80,38 @@ namespace GitHubAPIExperiments
             }
         }
 
-        public static void TestingLibrary ()
+        public static void TestingLibrary()
         {
             GitHubAPIClient.SetGitHubPAT(GitHubPAT);
 
-            Repository repo = NanoDNA.GitHubActionsManager.Repository.GetRepo(Owner, Repository);
+            Repository repo = NanoDNA.GitHubManager.Repository.GetRepo(Owner, Repository);
 
             //SpawnRunners(repo);
 
+            GitHubWebhookService webhookService = new GitHubWebhookService("myWebhookSecret");
+
+            webhookService.On<WorkflowJobEvent>(worflowJob =>
+            {
+
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{worflowJob.Workflow.ID}", repo, true);
+
+                builder.AddLabel($"run-{worflowJob.Workflow.ID}");
+
+                Runner runner = builder.Build();
+
+                runner.Start();
+            });
+
+            webhookService.StartAsync();
+
+            while (true)
+            {
+            }
+
+        }
+
+        static void TestEphemeralRunners(Repository repo)
+        {
             Workflow[] workflows = repo.GetWorkflows();
 
             foreach (Workflow workflow in workflows)
@@ -118,7 +143,7 @@ namespace GitHubAPIExperiments
             }
         }
 
-        static private void SpawnRunners (Repository repo )
+        static private void SpawnRunners(Repository repo)
         {
             List<Runner> runners = new List<Runner>();
 
