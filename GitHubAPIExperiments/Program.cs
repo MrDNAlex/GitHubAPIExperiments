@@ -95,23 +95,43 @@ namespace GitHubAPIExperiments
                 WorkflowJobEvent workflowJobEvent = worflowJob as WorkflowJobEvent;
                 //Console.WriteLine($"Workflow Job: {worflowJob.Workflow.ID}");
 
-                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{worflowJob.Workflow.ID}", repo, true);
+                Console.WriteLine("Received Workflow Job");
 
-                builder.AddLabel($"run-{worflowJob.Workflow.ID}");
+                //RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{worflowJob.Workflow.ID}", repo, true);
+                //
+                //builder.AddLabel($"run-{worflowJob.Workflow.ID}");
+                //
+                //Runner runner = builder.Build();
+                //
+                //runner.Start();
+            });
 
-                Runner runner = builder.Build();
+            webhookService.On<WorkflowRunEvent>(workflowRun =>
+            {
+                WorkflowRunEvent workflowRunEvent = workflowRun as WorkflowRunEvent;
+                //Console.WriteLine($"Workflow Run: {workflowRun.Workflow.ID}");
 
-                runner.Start();
+                Console.WriteLine("Received Workflow Run");
+
+                //RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflowRun.Workflow.ID}", repo, true);
+                //
+                //builder.AddLabel($"run-{workflowRun.Workflow.ID}");
+                //
+                //Runner runner = builder.Build();
+                //
+                //runner.Start();
             });
 
             webhookService.StartAsync();
+
+            TestEphemeralRunners(repo, true);
 
             while (true)
             {
             }
         }
 
-        static void TestEphemeralRunners(Repository repo)
+        static void TestEphemeralRunners(Repository repo, bool ephemeral)
         {
             Workflow[] workflows = repo.GetWorkflows();
 
@@ -120,7 +140,7 @@ namespace GitHubAPIExperiments
                 if (workflow.Status != "queued")
                     continue;
 
-                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo, false);
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo, ephemeral);
 
                 builder.AddLabel($"run-{workflow.ID}");
 
@@ -130,6 +150,9 @@ namespace GitHubAPIExperiments
 
                 runner.WaitForBusy();
 
+                if (ephemeral)
+                    continue;
+                
                 Console.WriteLine("Runner is now Busy");
 
                 runner.WaitForIdle();
