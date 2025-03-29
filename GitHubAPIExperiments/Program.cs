@@ -101,19 +101,12 @@ namespace GitHubAPIExperiments
                 Runner runner = builder.Build();
 
                 runner.Start();
-
-                //runner.WaitForNotBusy();
-
-                //runner.Stop();
             }
 
             while (true)
             {
 
             }
-
-
-            // repo.GetWorkflowJobs();
         }
 
         static private void SpawnRunners (Repository repo )
