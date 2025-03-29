@@ -161,13 +161,13 @@ namespace GitHubAPIExperiments
                 if (ephemeral)
                     continue;
                 
-                Console.WriteLine("Runner is now Busy");
-
-                runner.WaitForIdle();
-
-                Console.WriteLine("Runner is now Idle");
-
-                runner.Stop();
+                //Console.WriteLine("Runner is now Busy");
+                //
+                //runner.WaitForIdle();
+                //
+                //Console.WriteLine("Runner is now Idle");
+                //
+                //runner.Stop();
             }
 
             while (true)
