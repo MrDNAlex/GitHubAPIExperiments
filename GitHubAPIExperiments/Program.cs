@@ -11,12 +11,12 @@ namespace GitHubAPIExperiments
     {
         public static string GitHubPAT { get; set; }
 
-        //public static string Owner { get; set; } = "MrDNAlex";
-        public static string Owner { get; set; } = "Nano-DNA-Studios";
+        public static string Owner { get; set; } = "MrDNAlex";
+        //public static string Owner { get; set; } = "Nano-DNA-Studios";
 
-        //public static string Repository { get; set; } = "GitHubAPIExperiments";
+        public static string Repository { get; set; } = "GitHubAPIExperiments";
         //public static string Repository { get; set; } = "NanoDNA.DockerManager";
-        public static string Repository { get; set; } = "DNA.GitHubActionsWorkerManager";
+        //public static string Repository { get; set; } = "DNA.GitHubActionsWorkerManager";
 
 
         static void Main(string[] args)
@@ -85,41 +85,21 @@ namespace GitHubAPIExperiments
 
             //SpawnRunners(repo);
 
-            //List<Runner> runners = new List<Runner>();
-            //
-            //for (int i = 0; i < 3; i ++)
-            //{
-            //    RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments{i}", repo);
-            //
-            //    builder.AddLabel("GitHub APIExperiments");
-            //
-            //    Runner runner = builder.Build();
-            //
-            //    runner.Start();
-            //
-            //    runners.Add(runner);
-            //}
-            //
-            //repo.GetRunners();
-            //
-            //
-            ////Runner.GetRunners(Owner, Repository);
-            //
-            //foreach (Runner runner in runners)
-            //{
-            //    Console.WriteLine(JsonConvert.SerializeObject(runner, Formatting.Indented));
-            //
-            //    runner.Stop();
-            //}
-
             Workflow[] workflows = repo.GetWorkflows();
 
             foreach (Workflow workflow in workflows)
             {
-                workflow.GetLogs();
+                if (workflow.Status != "queued")
+                    continue;
+
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo);
+
+                builder.AddLabel($"run-{workflow.ID}");
+
+                Runner runner = builder.Build();
+
+                runner.Start();
             }
-
-
 
             // repo.GetWorkflowJobs();
         }
