@@ -101,6 +101,16 @@ namespace GitHubAPIExperiments
                 Runner runner = builder.Build();
 
                 runner.Start();
+
+                runner.WaitForBusy();
+
+                Console.WriteLine("Runner is now Busy");
+
+                runner.WaitForIdle();
+
+                Console.WriteLine("Runner is now Idle");
+
+                runner.Stop();
             }
 
             while (true)
