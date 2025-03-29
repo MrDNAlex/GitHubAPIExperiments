@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GitHubAPIExperiments
 {
@@ -12,8 +14,11 @@ namespace GitHubAPIExperiments
         public static string GitHubPAT { get; set; }
 
         public static string Owner { get; set; } = "MrDNAlex";
+        //public static string Owner { get; set; } = "Nano-DNA-Studios";
 
         public static string Repository { get; set; } = "GitHubAPIExperiments";
+        //public static string Repository { get; set; } = "NanoDNA.DockerManager";
+        //public static string Repository { get; set; } = "DNA.GitHubActionsWorkerManager";
 
 
         static void Main(string[] args)
@@ -80,11 +85,46 @@ namespace GitHubAPIExperiments
 
             Repository repo = NanoDNA.GitHubActionsManager.Repository.GetRepo(Owner, Repository);
 
+            //SpawnRunners(repo);
+
+            Workflow[] workflows = repo.GetWorkflows();
+
+            foreach (Workflow workflow in workflows)
+            {
+                if (workflow.Status != "queued")
+                    continue;
+
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo, false);
+
+                builder.AddLabel($"run-{workflow.ID}");
+
+                Runner runner = builder.Build();
+
+                runner.Start();
+
+                runner.WaitForBusy();
+
+                Console.WriteLine("Runner is now Busy");
+
+                runner.WaitForIdle();
+
+                Console.WriteLine("Runner is now Idle");
+
+                runner.Stop();
+            }
+
+            while (true)
+            {
+            }
+        }
+
+        static private void SpawnRunners (Repository repo )
+        {
             List<Runner> runners = new List<Runner>();
 
-            for (int i = 0; i < 3; i ++)
+            for (int i = 0; i < 3; i++)
             {
-                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments{i}", repo);
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments{i}", repo, true);
 
                 builder.AddLabel("GitHub APIExperiments");
 
