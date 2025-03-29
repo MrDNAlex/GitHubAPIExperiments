@@ -141,9 +141,9 @@ namespace GitHubAPIExperiments
 
         static void TestEphemeralRunners(Repository repo, bool ephemeral)
         {
-            Workflow[] workflows = repo.GetWorkflows();
+            WorkflowRun[] workflows = repo.GetWorkflows();
 
-            foreach (Workflow workflow in workflows)
+            foreach (WorkflowRun workflow in workflows)
             {
                 if (workflow.Status != "queued")
                     continue;
