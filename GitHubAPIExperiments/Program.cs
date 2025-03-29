@@ -88,6 +88,8 @@ namespace GitHubAPIExperiments
 
             //SpawnRunners(repo);
 
+            int count = 0;
+
             GitHubWebhookService webhookService = new GitHubWebhookService("myWebhookSecret");
 
             webhookService.On<WorkflowJobEvent>(worflowJob =>
@@ -95,10 +97,11 @@ namespace GitHubAPIExperiments
                 WorkflowJobEvent workflowJobEvent = worflowJob as WorkflowJobEvent;
                 //Console.WriteLine($"Workflow Job: {worflowJob.Workflow.ID}");
 
-                File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowJob-{DateTime.Now}.json", JsonConvert.SerializeObject(workflowJobEvent, Formatting.Indented));
-
-
                 Console.WriteLine("Received Workflow Job");
+                File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowJob-{count}.json", JsonConvert.SerializeObject(workflowJobEvent, Formatting.Indented));
+                count++;
+
+                
 
                 //RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{worflowJob.Workflow.ID}", repo, true);
                 //
@@ -115,8 +118,9 @@ namespace GitHubAPIExperiments
                 //Console.WriteLine($"Workflow Run: {workflowRun.Workflow.ID}");
 
                 Console.WriteLine("Received Workflow Run");
-                File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowRun-{DateTime.Now}.json", JsonConvert.SerializeObject(workflowRunEvent, Formatting.Indented));
+                File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowRun-{count}.json", JsonConvert.SerializeObject(workflowRunEvent, Formatting.Indented));
 
+                count++;
                 //RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflowRun.Workflow.ID}", repo, true);
                 //
                 //builder.AddLabel($"run-{workflowRun.Workflow.ID}");
