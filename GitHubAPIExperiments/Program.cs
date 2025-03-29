@@ -92,6 +92,8 @@ namespace GitHubAPIExperiments
 
             webhookService.On<WorkflowJobEvent>(worflowJob =>
             {
+                WorkflowJobEvent workflowJobEvent = worflowJob as WorkflowJobEvent;
+                //Console.WriteLine($"Workflow Job: {worflowJob.Workflow.ID}");
 
                 RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{worflowJob.Workflow.ID}", repo, true);
 
