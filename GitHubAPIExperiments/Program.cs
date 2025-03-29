@@ -95,6 +95,9 @@ namespace GitHubAPIExperiments
                 WorkflowJobEvent workflowJobEvent = worflowJob as WorkflowJobEvent;
                 //Console.WriteLine($"Workflow Job: {worflowJob.Workflow.ID}");
 
+                File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowJob-{DateTime.Now}.json", JsonConvert.SerializeObject(workflowJobEvent, Formatting.Indented));
+
+
                 Console.WriteLine("Received Workflow Job");
 
                 //RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{worflowJob.Workflow.ID}", repo, true);
@@ -112,6 +115,7 @@ namespace GitHubAPIExperiments
                 //Console.WriteLine($"Workflow Run: {workflowRun.Workflow.ID}");
 
                 Console.WriteLine("Received Workflow Run");
+                File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowRun-{DateTime.Now}.json", JsonConvert.SerializeObject(workflowRunEvent, Formatting.Indented));
 
                 //RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflowRun.Workflow.ID}", repo, true);
                 //
