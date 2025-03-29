@@ -1,12 +1,13 @@
 ﻿using NanoDNA.GitHubManager;
 using NanoDNA.GitHubManager.Events;
+using NanoDNA.GitHubManager.Models;
+using NanoDNA.GitHubManager.Services;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GitHubAPIExperiments
 {
@@ -14,11 +15,11 @@ namespace GitHubAPIExperiments
     {
         public static string GitHubPAT { get; set; }
 
-        public static string Owner { get; set; } = "MrDNAlex";
-        //public static string Owner { get; set; } = "Nano-DNA-Studios";
+        //public static string Owner { get; set; } = "MrDNAlex";
+        public static string Owner { get; set; } = "Nano-DNA-Studios";
 
-        public static string Repository { get; set; } = "GitHubAPIExperiments";
-        //public static string Repository { get; set; } = "NanoDNA.DockerManager";
+        //public static string Repository { get; set; } = "GitHubAPIExperiments";
+        public static string Repository { get; set; } = "NanoDNA.GitHubManager";
         //public static string Repository { get; set; } = "DNA.GitHubActionsWorkerManager";
 
 
@@ -84,7 +85,7 @@ namespace GitHubAPIExperiments
         {
             GitHubAPIClient.SetGitHubPAT(GitHubPAT);
 
-            Repository repo = NanoDNA.GitHubManager.Repository.GetRepo(Owner, Repository);
+            Repository repo = NanoDNA.GitHubManager.Models.Repository.GetRepo(Owner, Repository);
 
             //SpawnRunners(repo);
 
@@ -100,16 +101,6 @@ namespace GitHubAPIExperiments
                 Console.WriteLine("Received Workflow Job");
                 File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowJob-{count}.json", JsonConvert.SerializeObject(workflowJobEvent, Formatting.Indented));
                 count++;
-
-                
-
-                //RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{worflowJob.Workflow.ID}", repo, true);
-                //
-                //builder.AddLabel($"run-{worflowJob.Workflow.ID}");
-                //
-                //Runner runner = builder.Build();
-                //
-                //runner.Start();
             });
 
             webhookService.On<WorkflowRunEvent>(workflowRun =>
@@ -121,6 +112,9 @@ namespace GitHubAPIExperiments
                 File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowRun-{count}.json", JsonConvert.SerializeObject(workflowRunEvent, Formatting.Indented));
 
 
+                if (workflowRun.WorkflowRun.Status != "queued")
+                    return;
+
                 RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflowRun.WorkflowRun.ID}", repo, true);
 
                 builder.AddLabel($"run-{workflowRun.WorkflowRun.ID}");
@@ -128,6 +122,12 @@ namespace GitHubAPIExperiments
                 Runner runner = builder.Build();
 
                 runner.Start();
+
+                runner.StopRunner += (run) => {
+
+                    Console.WriteLine(run.Container.GetLogs());
+                
+                };
 
                 count++;
             });
@@ -149,6 +149,8 @@ namespace GitHubAPIExperiments
             {
                 if (workflow.Status != "queued")
                     continue;
+
+                Console.WriteLine($"Starting Runner for Workflow: {workflow.ID}");
 
                 RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo, ephemeral);
 
