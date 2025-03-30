@@ -148,8 +148,6 @@ namespace GitHubAPIExperiments
 
             webhookService.StartAsync();
 
-            //Repository repo = NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, Repository);
-
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.GitHubManager"), true);
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.ProcessRunner"), true);
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.DockerManager"), true);
