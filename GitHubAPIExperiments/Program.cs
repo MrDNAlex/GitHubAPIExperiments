@@ -24,7 +24,7 @@ namespace GitHubAPIExperiments
 
         static void Main(string[] args)
         {
-            GitHubPAT = File.ReadAllText("githubtoken.txt");
+            GitHubPAT = File.ReadAllText("githubtoken.txt").Trim();
 
             Console.WriteLine(GitHubPAT);
 
