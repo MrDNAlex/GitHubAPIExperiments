@@ -148,7 +148,11 @@ namespace GitHubAPIExperiments
 
             webhookService.StartAsync();
 
-            TestEphemeralRunners(repo, true);
+            //Repository repo = NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, Repository);
+
+            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.GitHubManager"), true);
+            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.ProcessRunner"), true);
+            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.DockerManager"), true);
 
             while (true)
             {
@@ -186,10 +190,6 @@ namespace GitHubAPIExperiments
                 //Console.WriteLine("Runner is now Idle");
                 //
                 //runner.Stop();
-            }
-
-            while (true)
-            {
             }
         }
 
