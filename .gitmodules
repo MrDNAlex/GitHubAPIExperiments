@@ -1,3 +1,9 @@
 [submodule "Submodules/NanoDNA.GitHubManager"]
 	path = Submodules/NanoDNA.GitHubManager
 	url = https://github.com/Nano-DNA-Studios/NanoDNA.GitHubManager
+[submodule "Submodules/NanoDNA.ProcessRunner"]
+	path = Submodules/NanoDNA.ProcessRunner
+	url = https://github.com/Nano-DNA-Studios/NanoDNA.ProcessRunner
+[submodule "Submodules/NanoDNA.DockerManager"]
+	path = Submodules/NanoDNA.DockerManager
+	url = https://github.com/Nano-DNA-Studios/NanoDNA.DockerManager
