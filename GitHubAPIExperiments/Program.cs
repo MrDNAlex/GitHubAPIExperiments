@@ -105,8 +105,6 @@ namespace GitHubAPIExperiments
             webhookService.On<WorkflowRunEvent>(workflowRun =>
             {
                 WorkflowRunEvent workflowRunEvent = workflowRun as WorkflowRunEvent;
-                //Console.WriteLine($"Workflow Run: {workflowRun.Workflow.ID}");
-
                 Console.WriteLine("Received Workflow Run");
                 File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowRun-{count}.json", JsonConvert.SerializeObject(workflowRunEvent, Formatting.Indented));
 
