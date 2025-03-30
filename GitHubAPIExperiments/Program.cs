@@ -95,8 +95,6 @@ namespace GitHubAPIExperiments
             webhookService.On<WorkflowJobEvent>(worflowJob =>
             {
                 WorkflowJobEvent workflowJobEvent = worflowJob as WorkflowJobEvent;
-                //Console.WriteLine($"Workflow Job: {worflowJob.Workflow.ID}");
-
                 Console.WriteLine("Received Workflow Job");
                 File.WriteAllText(@$"C:\Users\MrDNA\Downloads\GitHubActionWorker\workflowJob-{count}.json", JsonConvert.SerializeObject(workflowJobEvent, Formatting.Indented));
                 count++;
