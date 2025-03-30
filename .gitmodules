@@ -1,0 +1,3 @@
+[submodule "Submodules/NanoDNA.GitHubManager"]
+	path = Submodules/NanoDNA.GitHubManager
+	url = https://github.com/Nano-DNA-Studios/NanoDNA.GitHubManager

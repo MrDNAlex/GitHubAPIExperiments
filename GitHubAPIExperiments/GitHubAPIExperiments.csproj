@@ -16,9 +16,6 @@
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Development\NanoDNA.GitHubActionsManager\NanoDNA.GitHubManager\NanoDNA.GitHubManager.csproj" />
-	</ItemGroup>
-	<ItemGroup>
 	  <None Update="githubtoken.txt">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

@@ -3,7 +3,6 @@ using NanoDNA.GitHubManager.Events;
 using NanoDNA.GitHubManager.Models;
 using NanoDNA.GitHubManager.Services;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -85,7 +84,7 @@ namespace GitHubAPIExperiments
         {
             GitHubAPIClient.SetGitHubPAT(GitHubPAT);
 
-            Repository repo = NanoDNA.GitHubManager.Models.Repository.GetRepo(Owner, Repository);
+            Repository repo = NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, Repository);
 
             //SpawnRunners(repo);
 
@@ -115,7 +114,7 @@ namespace GitHubAPIExperiments
                 if (workflowRun.WorkflowRun.Status != "queued")
                     return;
 
-                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflowRun.WorkflowRun.ID}", repo, true);
+                RunnerBuilder builder = new RunnerBuilder($"{workflowRunEvent.WorkflowRun.Repository.Name}-{workflowRun.WorkflowRun.ID}", "mrdnalex/github-action-worker-container-dotnet", repo, true);
 
                 builder.AddLabel($"run-{workflowRun.WorkflowRun.ID}");
 
@@ -123,10 +122,25 @@ namespace GitHubAPIExperiments
 
                 runner.Start();
 
-                runner.StopRunner += (run) => {
+                runner.StopRunner += (run) =>
+                {
 
                     Console.WriteLine(run.Container.GetLogs());
-                
+
+                    WorkflowRun[] runs = repo.GetWorkflows();
+
+                    foreach (WorkflowRun workRun in runs)
+                    {
+                        if (workRun.ID == workflowRun.WorkflowRun.ID)
+                        {
+                            Console.WriteLine($"Workflow Run: {workRun.ID} Status: {workRun.Status}");
+
+                            workRun.GetLogs();
+
+                            WorkflowJob[] jobs = workRun.GetJobs();
+
+                        }
+                    }
                 };
 
                 count++;
@@ -134,7 +148,7 @@ namespace GitHubAPIExperiments
 
             webhookService.StartAsync();
 
-            //TestEphemeralRunners(repo, true);
+            TestEphemeralRunners(repo, true);
 
             while (true)
             {
@@ -152,7 +166,7 @@ namespace GitHubAPIExperiments
 
                 Console.WriteLine($"Starting Runner for Workflow: {workflow.ID}");
 
-                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", repo, ephemeral);
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments-{workflow.ID}", "mrdnalex/github-action-worker-container-dotnet", repo, ephemeral);
 
                 builder.AddLabel($"run-{workflow.ID}");
 
@@ -164,7 +178,7 @@ namespace GitHubAPIExperiments
 
                 if (ephemeral)
                     continue;
-                
+
                 //Console.WriteLine("Runner is now Busy");
                 //
                 //runner.WaitForIdle();
@@ -185,7 +199,7 @@ namespace GitHubAPIExperiments
 
             for (int i = 0; i < 3; i++)
             {
-                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments{i}", repo, true);
+                RunnerBuilder builder = new RunnerBuilder($"GitHubAPIExperiments{i}", "mrdnalex/github-action-worker-container-dotnet", repo, true);
 
                 builder.AddLabel("GitHub APIExperiments");
 
