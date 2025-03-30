@@ -18,7 +18,7 @@ namespace GitHubAPIExperiments
         public static string Owner { get; set; } = "Nano-DNA-Studios";
 
         //public static string Repository { get; set; } = "GitHubAPIExperiments";
-        public static string Repository { get; set; } = "NanoDNA.GitHubManager";
+        public static string Repository { get; set; } = "NanoDNA.ProcessRunner";
         //public static string Repository { get; set; } = "DNA.GitHubActionsWorkerManager";
 
 
