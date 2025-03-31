@@ -49,7 +49,16 @@ namespace GitHubAPIExperiments
             //
             //runner.StopRunner();
 
-            TestingLibrary();
+            //TestingLibrary();
+
+            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.GitHubManager"), true);
+            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.ProcessRunner"), true);
+            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.DockerManager"), true);
+            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository("MrDNAlex", "GitHubAPIExperiments"), true);
+
+            while (true)
+            {
+            }
         }
 
         public static void GetRepositoryInfo()
@@ -151,14 +160,9 @@ namespace GitHubAPIExperiments
 
             webhookService.StartAsync();
 
-            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.GitHubManager"), true);
-            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.ProcessRunner"), true);
-            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.DockerManager"), true);
-            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository("MrDNAlex", "GitHubAPIExperiments"), true);
+            
 
-            while (true)
-            {
-            }
+            
         }
 
         static void TestEphemeralRunners(Repository repo, bool ephemeral)
