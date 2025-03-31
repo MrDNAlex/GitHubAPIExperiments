@@ -35,6 +35,12 @@ namespace GitHubAPIExperiments
 
             Console.WriteLine(runner.StandardOutput[0]);
 
+            CommandRunner dockerRunner = new CommandRunner();
+
+            dockerRunner.RunCommand($"docker run --name dindtest --privileged --group-add {runner.StandardOutput[0]} -v /var/run/docker.sock:/var/run/docker.sock -d ubuntu:22.04");
+
+
+
             //GetRepositoryInfo();
 
             //GitHubRepository repo = GitHubRepository.GetRepo(Owner, Repository, GitHubPAT);
