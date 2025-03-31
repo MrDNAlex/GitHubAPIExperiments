@@ -39,7 +39,11 @@ namespace GitHubAPIExperiments
 
             CommandRunner dockerRunner = new CommandRunner();
 
-            dockerRunner.RunCommand($"docker run --name dindtest --privileged --group-add {runner.StandardOutput[0]} -v /var/run/docker.sock:/var/run/docker.sock -d ubuntu:22.04");
+            string dockerCommand = $"docker run --name dindtest --privileged --group-add {runner.StandardOutput[0]} -v /var/run/docker.sock:/var/run/docker.sock -d ubuntu:22.04";
+
+            Console.WriteLine(dockerCommand);
+
+            dockerRunner.RunCommand(dockerCommand);
 
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.GitHubManager"), true);
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.ProcessRunner"), true);
