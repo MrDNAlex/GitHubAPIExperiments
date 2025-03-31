@@ -29,6 +29,8 @@ namespace GitHubAPIExperiments
 
             Console.WriteLine(GitHubPAT);
 
+            GitHubAPIClient.SetGitHubPAT(GitHubPAT);
+
             CommandRunner runner = new CommandRunner();
 
             runner.RunCommand("(getent group docker | cut -d: -f3)");
@@ -38,25 +40,6 @@ namespace GitHubAPIExperiments
             CommandRunner dockerRunner = new CommandRunner();
 
             dockerRunner.RunCommand($"docker run --name dindtest --privileged --group-add {runner.StandardOutput[0]} -v /var/run/docker.sock:/var/run/docker.sock -d ubuntu:22.04");
-
-
-
-            //GetRepositoryInfo();
-
-            //GitHubRepository repo = GitHubRepository.GetRepo(Owner, Repository, GitHubPAT);
-            //
-            //Console.WriteLine(JsonConvert.SerializeObject(repo, Formatting.Indented));
-            //
-            //GitHubRunner runner = repo.StartGitHubActionsRunner(GitHubPAT);
-            //
-            //GitHubRunnersPayload runners = GitHubRunnersPayload.GetRunners(Owner, Repository, GitHubPAT);
-            //
-            //Console.WriteLine(JsonConvert.SerializeObject(runners, Formatting.Indented));
-            //
-            //runner.StopRunner();
-
-            //TestingLibrary();
-            GitHubAPIClient.SetGitHubPAT(GitHubPAT);
 
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.GitHubManager"), true);
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.ProcessRunner"), true);
@@ -166,10 +149,6 @@ namespace GitHubAPIExperiments
             });
 
             webhookService.StartAsync();
-
-            
-
-            
         }
 
         static void TestEphemeralRunners(Repository repo, bool ephemeral)
