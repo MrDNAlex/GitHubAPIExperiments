@@ -50,6 +50,7 @@ namespace GitHubAPIExperiments
             //runner.StopRunner();
 
             //TestingLibrary();
+            GitHubAPIClient.SetGitHubPAT(GitHubPAT);
 
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.GitHubManager"), true);
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.ProcessRunner"), true);
