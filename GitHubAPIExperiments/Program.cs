@@ -31,19 +31,19 @@ namespace GitHubAPIExperiments
 
             GitHubAPIClient.SetGitHubPAT(GitHubPAT);
 
-            CommandRunner runner = new CommandRunner();
-
-            runner.RunCommand("(getent group docker | cut -d: -f3)");
-
-            Console.WriteLine(runner.StandardOutput[0]);
-
-            CommandRunner dockerRunner = new CommandRunner();
-
-            string dockerCommand = $"docker run --name dindtest --privileged --group-add {runner.StandardOutput[0]} -v /var/run/docker.sock:/var/run/docker.sock -it -d ubuntu:22.04 docker run -it hello-world";
-
-            Console.WriteLine(dockerCommand);
-
-            dockerRunner.RunCommand(dockerCommand);
+            //CommandRunner runner = new CommandRunner();
+            //
+            //runner.RunCommand("(getent group docker | cut -d: -f3)");
+            //
+            //Console.WriteLine(runner.StandardOutput[0]);
+            //
+            //CommandRunner dockerRunner = new CommandRunner();
+            //
+            //string dockerCommand = $"docker run --name dindtest --privileged --group-add {runner.StandardOutput[0]} -v /var/run/docker.sock:/var/run/docker.sock -it -d ubuntu:22.04 docker run -it hello-world";
+            //
+            //Console.WriteLine(dockerCommand);
+            //
+            //dockerRunner.RunCommand(dockerCommand);
 
 
             //TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.GitHubManager"), true);
