@@ -39,7 +39,7 @@ namespace GitHubAPIExperiments
 
             CommandRunner dockerRunner = new CommandRunner();
 
-            string dockerCommand = $"docker run --name dindtest --privileged --group-add {runner.StandardOutput[0]} -v /var/run/docker.sock:/var/run/docker.sock -it -d mrdnalex/github-action-worker-container-dotnet docker run -it hello-world";
+            string dockerCommand = $"docker run --name dindtest --privileged --group-add {runner.StandardOutput[0]} -v /var/run/docker.sock:/var/run/docker.sock -it -d ubuntu:22.04 docker run -it hello-world";
 
             Console.WriteLine(dockerCommand);
 
