@@ -2,6 +2,7 @@
 using NanoDNA.GitHubManager.Events;
 using NanoDNA.GitHubManager.Models;
 using NanoDNA.GitHubManager.Services;
+using NanoDNA.ProcessRunner;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,12 @@ namespace GitHubAPIExperiments
             GitHubPAT = File.ReadAllText("githubtoken.txt").Trim();
 
             Console.WriteLine(GitHubPAT);
+
+            CommandRunner runner = new CommandRunner();
+
+            runner.RunCommand("(getent group docker | cut -d: -f3)");
+
+            Console.WriteLine(runner.StandardOutput[0]);
 
             //GetRepositoryInfo();
 
