@@ -7,6 +7,9 @@ on:
 permissions:
   contents: read 
 
+env:
+    GITHUBPAT: ${{ secrets.GITHUBPAT}}    
+
 jobs:
   setup:
     runs-on: ["self-hosted", "run-${{github.run_id}}"]
