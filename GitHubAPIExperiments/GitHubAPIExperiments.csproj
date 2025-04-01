@@ -11,12 +11,12 @@
 	
 	<!-- Nuget References -->
 	<ItemGroup>
-	  <PackageReference Include="NanoDNA.DockerManager" Version="0.1.0" />
-	  <PackageReference Include="NanoDNA.ProcessRunner" Version="0.1.3" />
+	  <!--<PackageReference Include="NanoDNA.DockerManager" Version="0.1.0" />-->
+	  <!--<PackageReference Include="NanoDNA.ProcessRunner" Version="0.1.3" />-->
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Development\NanoDNA.GitHubActionsManager\NanoDNA.GitHubActionsManager\NanoDNA.GitHubActionsManager.csproj" />
+	  <ProjectReference Include="..\Submodules\NanoDNA.GitHubManager\NanoDNA.GitHubManager\NanoDNA.GitHubManager.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Update="githubtoken.txt">
