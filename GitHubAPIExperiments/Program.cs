@@ -46,6 +46,7 @@ namespace GitHubAPIExperiments
             //dockerRunner.RunCommand(dockerCommand);
 
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.GitHubManager"), true);
+            TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.CLIFramework"), true);
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.ProcessRunner"), true);
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository(Owner, "NanoDNA.DockerManager"), true);
             TestEphemeralRunners(NanoDNA.GitHubManager.Models.Repository.GetRepository("MrDNAlex", "GitHubAPIExperiments"), true);
