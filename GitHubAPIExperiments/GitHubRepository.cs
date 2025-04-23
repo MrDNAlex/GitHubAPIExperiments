@@ -91,7 +91,7 @@ namespace GitHubAPIExperiments
 
         public GitHubRunner StartGitHubActionsRunner (string githubPAT)
         {
-            DockerContainer container = new DockerContainer("gitapiexperiments", "mrdnalex/github-action-worker-container");
+            DockerContainer container = new DockerContainer("gitapiexperiments", "mrdnalex/github-action-worker-container", true);
 
             container.AddEnvironmentVariable("REPO", HtmlURL);
             container.AddEnvironmentVariable("TOKEN", GetToken(githubPAT));
